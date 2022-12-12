@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-import { prisma } from "@acme/db";
+import { prisma } from "@sphynx/db";
 import { type inferAsyncReturnType } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { z } from "zod";

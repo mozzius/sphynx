@@ -1,4 +1,4 @@
-import { appRouter, createContext } from "@acme/api";
+import { appRouter, createContext } from "@sphynx/api";
 import { createNextApiHandler } from "@trpc/server/adapters/next";
 
 // export API handler
