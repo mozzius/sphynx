@@ -12,10 +12,10 @@
     "lint": "eslint . --ext ts,tsx"
   },
   "dependencies": {
-    "@sphynx/api": "*",
-    "@sphynx/tailwind-config": "*",
     "@react-navigation/native": "^6.1.0",
     "@shopify/flash-list": "^1.4.0",
+    "@sphynx/api": "*",
+    "@sphynx/tailwind-config": "*",
     "@tanstack/react-query": "^4.16.1",
     "@trpc/client": "^10.1.0",
     "@trpc/react-query": "^10.1.0",
