@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@acme/api": "*",
-    "@acme/auth": "*",
     "@acme/db": "*",
     "@acme/tailwind-config": "*",
     "@tanstack/react-query": "^4.16.1",

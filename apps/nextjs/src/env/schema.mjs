@@ -7,8 +7,6 @@ import { z } from "zod";
  */
 export const serverSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
-  EMAIL_SERVER: z.string(),
-  EMAIL_FROM: z.string(),
 });
 
 /**

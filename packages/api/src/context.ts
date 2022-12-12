@@ -1,13 +1,18 @@
-import { getServerSession, type Session } from "@acme/auth";
+import jwt from "jsonwebtoken";
+
 import { prisma } from "@acme/db";
 import { type inferAsyncReturnType } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import { z } from "zod";
 
 /**
  * Replace this with an object if you want to pass things to createContextInner
  */
 type CreateContextOptions = {
-  session: Session | null;
+  session: {
+    id: string;
+    email: string;
+  } | null;
 };
 
 /** Use this helper for:
@@ -22,13 +27,36 @@ export const createContextInner = async (opts: CreateContextOptions) => {
   };
 };
 
+const userTokenPayload = z.object({
+  id: z.string(),
+  email: z.string(),
+});
+
+const decodeToken = (
+  token: string,
+): Promise<z.TypeOf<typeof userTokenPayload>> =>
+  new Promise((resolve, reject) => {
+    jwt.verify(token, process.env.JWT_SECRET as string, (err, decoded) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(userTokenPayload.parse(decoded));
+      }
+    });
+  });
+
 /**
  * This is the actual context you'll use in your router
  * @link https://trpc.io/docs/context
  **/
 export const createContext = async (opts: CreateNextContextOptions) => {
-  const session = await getServerSession(opts);
-
+  let session = null;
+  if (opts.req.headers.authorization) {
+    const res = await decodeToken(opts.req.headers.authorization);
+    if (res) {
+      session = res;
+    }
+  }
   return await createContextInner({
     session,
   });
